@@ -129,6 +129,7 @@ fractal = FractalArray(3, 3)
 # further explanation.
 # args: run_count, iter_count, keywords
 # keywords: randomize(int), num_rules(int), bw(int), options(str) 'ones' 'zero' 'invert'
+#
 # WARNING: Don't make iter_count too high - images generated with 6 iterations are already huge enough.
 
 fractal.run(1, 5, randomize=1, num_rules=2, bw=1)
