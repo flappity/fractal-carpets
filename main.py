@@ -132,4 +132,4 @@ fractal = FractalArray(3, 3)
 #
 # WARNING: Don't make iter_count too high - images generated with 6 iterations are already huge enough.
 
-fractal.run(1, 5, randomize=1, num_rules=2, bw=1)
+fractal.run(1, 5, randomize=1, num_rules=10, bw=1)
