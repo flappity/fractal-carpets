@@ -60,12 +60,39 @@ class FractalArray:
                 ruleset[1].fill('0')
             elif option == 'ones':
                 ruleset[1].fill('1')
+            elif option == 'invert':
+                if num_rules == 2:
+                    ruleset[0] = np.random.randint(num_rules, size=(3, 3))
+                    ruleset[1] = np.logical_not(ruleset[0]).astype(int)
+
+
         self.rules = ruleset
 
     def reset(self):
         self.array = np.zeros(shape=(self.x, self.y), dtype=np.int)
 
     def run(self, run_count, iter_count, randomize=1, option='None', num_rules=2, bw=0):
+        """Runs the fractal generation.
+
+        Args:
+            run_count(int): Output this many images.
+
+            iter_count(int): How many times to run the function, per image.
+                5-6 is a safe number, too large and the output is huge
+
+            randomize(int): 1: Generate new rules per image; 0: use hardcoded rules above
+
+            option(str): Lets you force certain rules - see above - sort of useless with
+                more than 3 colors.
+                    "zero" forces rule_1 to be all 0's
+                    "ones" forces rule_1 to be all 1's
+                    "invert" only works with two colors - rule_1 is rule_0 inverted.
+
+            num_rules(int): Choose how many rules/colors you want to use. Defaults to 2
+
+            bw(int): 0 for a full (randomly generated) color selection, 1 for greyscale.
+        """
+
         for a in range(run_count):
             self.reset()
             if bw == 1:
@@ -97,14 +124,11 @@ class FractalArray:
 # Create the first stage of the fractal with x/y dimensions
 fractal = FractalArray(3, 3)
 
-# num_images, num_iterations, randomize, num_rules, option, bw
-# num_images:       Number of different images to output
-# num_iterations:   How many times to iterate - the image size increases very quickly, be careful
-# randomize:        Will generate rules if set to 1; otherwise, uses rules in fractal.rules
-# num_rules:        Number of "rules" or "colors" - each color has a rule for expansion
-# option:           Hardcoded options that change rule 1 - relics of an old age
-#                       zeros = rule_1 is ([0, 0, 0], [0, 0, 0], [0, 0, 0])
-#                       ones = rule_1 is ([1, 1, 1], [1, 1, 1], [1, 1, 1])
-# bw:               Generates b/w images - 2 rules = black/white, more colors = more shades of grey
+#################################################################
+# The line below is where you can play with the parameters of the fractal generation. See documentation above for
+# further explanation.
+# args: run_count, iter_count, keywords
+# keywords: randomize(int), num_rules(int), bw(int), options(str) 'ones' 'zero' 'invert'
+# WARNING: Don't make iter_count too high - images generated with 6 iterations are already huge enough.
 
-fractal.run(1, 5, randomize=1, num_rules=10, bw=1)
+fractal.run(1, 5, randomize=1, num_rules=2, bw=1)
